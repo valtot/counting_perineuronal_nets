@@ -41,7 +41,7 @@ def main(args):
     metric_name = args.best_on_metric.replace('/', '-')
     ckpt_path = best_models_folder / f'best_model_metric_{metric_name}.pth'
     log.info(f"[CKPT]: Loading {ckpt_path}")
-    checkpoint = torch.load(ckpt_path, map_location=device)
+    checkpoint = torch.load(ckpt_path, map_location=device, weights_only=False)
     model.load_state_dict(checkpoint['model'])
 
     outdir = (run_path / 'test_predictions') if args.save else None

@@ -72,7 +72,7 @@ def main(args):
     if not ckpt_path.exists():
         ckpt_path = run_path / 'last.pth'
     log.info(f"[CKPT]: Loading {ckpt_path}")
-    checkpoint = torch.load(ckpt_path, map_location=device)
+    checkpoint = torch.load(ckpt_path, map_location=device, weights_only=False)
     model.load_state_dict(checkpoint['model'])
 
     outdir = (run_path / 'test_predictions') if args.save else None

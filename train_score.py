@@ -149,7 +149,7 @@ def main(cfg):
     # optionally resume from a saved checkpoint
     if cfg.optim.resume:
         assert Path('last.pth').exists(), 'Cannot find checkpoint for resuming.'
-        checkpoint = torch.load('last.pth', map_location=device)
+        checkpoint = torch.load('last.pth', map_location=device, weights_only=False)
 
         model.load_state_dict(checkpoint['model'])
         optimizer.load_state_dict(checkpoint['optimizer'])

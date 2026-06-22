@@ -73,7 +73,7 @@ def main(cfg):
             pre_trained_model = torch.hub.load_state_dict_from_url(
                 cfg.model.pretrained, map_location=device, model_dir=cfg.model.cache_folder)
         else:
-            pre_trained_model = torch.load(cfg.model.pretrained, map_location=device)
+            pre_trained_model = torch.load(cfg.model.pretrained, map_location=device, weights_only=False)
         model.load_state_dict(pre_trained_model['model'])
         log.info(f"[PRETRAINED]: {cfg.model.pretrained}")
         
@@ -89,7 +89,7 @@ def main(cfg):
     # optionally resume from a saved checkpoint
     if cfg.optim.resume:
         assert Path('last.pth').exists(), 'Cannot find checkpoint for resuming.'
-        checkpoint = torch.load('last.pth', map_location=device)
+        checkpoint = torch.load('last.pth', map_location=device, weights_only=False)
 
         model.load_state_dict(checkpoint['model'])
         optimizer.load_state_dict(checkpoint['optimizer'])

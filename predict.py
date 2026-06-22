@@ -53,7 +53,7 @@ def main(args):
     if not ckpt_path.exists():
         ckpt_path = run_path / 'best_models' / f"best_model_metric_{metric_name.replace('/', '-')}.pth"
     print(f"[  CKPT] {ckpt_path}")
-    checkpoint = torch.load(ckpt_path, map_location=device)
+    checkpoint = torch.load(ckpt_path, map_location=device, weights_only=False)
     model.load_state_dict(checkpoint['model'])
 
     threshold = checkpoint['metrics'][metric_name]['threshold'] if args.threshold is None else args.threshold
@@ -103,7 +103,7 @@ def main(args):
             ckpt_path = run_path / 'last.pth'
 
         print(f"[  CKPT] {ckpt_path}")
-        checkpoint = torch.load(ckpt_path, map_location=device)
+        checkpoint = torch.load(ckpt_path, map_location=device, weights_only=False)
         model.load_state_dict(checkpoint['model'])
 
         scores = score_patches(loader, model, device, cfg)

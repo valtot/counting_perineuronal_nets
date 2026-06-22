@@ -16,7 +16,7 @@ def convert_ckpt(src, dest):
         print(f'SKIPPING CKPT: {src.name} -> {dest}')
         return
 
-    ckpt = torch.load(src, map_location='cpu')
+    ckpt = torch.load(src, map_location='cpu', weights_only=False)
     values = ckpt.pop('best_validation_metrics')
     thresholds = ckpt.pop('best_thresholds')
     epochs = ckpt.pop('best_metrics_epoch')
@@ -71,7 +71,7 @@ def main(args):
             continue
 
         print(f'LOADING CKPT: {ckpt_file}')
-        ckpt = torch.load(ckpt_file, map_location='cpu')
+        ckpt = torch.load(ckpt_file, map_location='cpu', weights_only=False)
         epoch = ckpt['epoch']
         metrics = ckpt.pop('metrics')
         ckpt['metrics'] = {
